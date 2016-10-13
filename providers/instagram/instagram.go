@@ -3,21 +3,19 @@ package instagram
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
+	"github.com/markbates/goth"
+	"golang.org/x/oauth2"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"net/url"
-	"strings"
-
-	"golang.org/x/oauth2"
-
-	"github.com/markbates/goth"
 )
 
 var (
 	authURL         = "https://api.instagram.com/oauth/authorize/"
 	tokenURL        = "https://api.instagram.com/oauth/access_token"
-	endPointProfile = "https://api.instagram.com/v1/users/self/"
+	endpointProfile = "https://api.instagram.com/v1/users/self/"
 )
 
 // New creates a new Instagram provider, and sets up important connection details.
@@ -50,6 +48,7 @@ func (p *Provider) Name() string {
 //Debug TODO
 func (p *Provider) Debug(debug bool) {}
 
+// BeginAuth asks Instagram for an authentication end-point.
 func (p *Provider) BeginAuth(state string) (goth.Session, error) {
 	url := p.config.AuthCodeURL(state)
 	session := &Session{
@@ -58,6 +57,7 @@ func (p *Provider) BeginAuth(state string) (goth.Session, error) {
 	return session, nil
 }
 
+// FetchUser will go to Instagram and access basic information about the user.
 func (p *Provider) FetchUser(session goth.Session) (goth.User, error) {
 	sess := session.(*Session)
 	user := goth.User{
@@ -65,8 +65,11 @@ func (p *Provider) FetchUser(session goth.Session) (goth.User, error) {
 		Provider:    p.Name(),
 	}
 
-	response, err := http.Get(endPointProfile + "?access_token=" + url.QueryEscape(sess.AccessToken))
+	response, err := http.Get(endpointProfile + "?access_token=" + url.QueryEscape(sess.AccessToken))
 	if err != nil {
+		if response != nil {
+			response.Body.Close()
+		}
 		return user, err
 	}
 	defer response.Body.Close()
@@ -81,13 +84,6 @@ func (p *Provider) FetchUser(session goth.Session) (goth.User, error) {
 	}
 	err = userFromReader(bytes.NewReader(bits), &user)
 	return user, err
-}
-
-// UnmarshalSession will unmarshal a JSON string into a session.
-func (p *Provider) UnmarshalSession(data string) (goth.Session, error) {
-	sess := &Session{}
-	err := json.NewDecoder(strings.NewReader(data)).Decode(sess)
-	return sess, err
 }
 
 func userFromReader(reader io.Reader, user *goth.User) error {
@@ -141,4 +137,14 @@ func newConfig(p *Provider, scopes []string) *oauth2.Config {
 	}
 
 	return c
+}
+
+//RefreshToken refresh token is not provided by instagram
+func (p *Provider) RefreshToken(refreshToken string) (*oauth2.Token, error) {
+	return nil, errors.New("Refresh token is not provided by instagram")
+}
+
+//RefreshTokenAvailable refresh token is not provided by instagram
+func (p *Provider) RefreshTokenAvailable() bool {
+	return false
 }

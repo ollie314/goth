@@ -20,23 +20,44 @@ $ go get github.com/markbates/goth
 
 ## Supported Providers
 
+* Amazon
 * Bitbucket
+* Box
+* Cloud Foundry
+* Dailymotion
+* Deezer
 * Digital Ocean
 * Dropbox
 * Facebook
+* Fitbit
 * GitHub
+* Gitlab
 * Google+
+* Heroku
+* InfluxCloud
+* Instagram
+* Intercom
 * Lastfm
 * Linkedin
+* OneDrive
+* Paypal
+* SalesForce
+* Slack
+* Soundcloud
 * Spotify
+* Steam
+* Stripe
 * Twitch
 * Twitter
-* Instagram
+* Uber
+* Wepay
+* Yahoo
+* Yammer
 
 ## Examples
 
 See the [examples](examples) folder for a working application that lets users authenticate
-through Twitter, Facebook or Google Plus.
+through Twitter, Facebook, Google Plus etc.
 
 ## Issues
 
@@ -58,23 +79,36 @@ Would I love to see more providers? Certainly! Would you love to contribute one?
 
 * Mark Bates
 * Tyler Bunnell
+* Rakesh Goyal
+* Andy Grunwald
+* Kevin Fitzpatrick
 * Sharad Ganapathy
-* sharadgana
 * Ben Tranter
+* sharadgana
+* Geoff Franks
 * Zac Bergquist
 * Craig P Jolicoeur
-* oov
-* Tyler
+* Corey McGrillis
 * Rafael Quintela
 * Noah Shibley
+* oov
+* Tyler
+* DenSm
+* dante gray
+* Raphael Geronimi
 * Glenn Walker
 * Noah
-* DenSm
-* HaiMing.Yin
-* Jonathan Hall
 * bryanl
-* Jerome Touffe-Blin
 * Johnny Boursiquot
-* dkhamsing
-* Omni Adams
 * Masanobu YOSHIOKA
+* Jonathan Hall
+* HaiMing.Yin
+* Omni Adams
+* Albin Gilles
+* Dante Swift
+* Felix Lamouroux
+* dkhamsing
+* Jacob Walker
+* Jerome Touffe-Blin
+* Samy Kacimi
+
